@@ -1,10 +1,10 @@
-# Precious Drop Game 💧
+# Precious Drop 💧
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-A classic arcade-style browser game created to raise awareness about water conservation. Developed by Ahmed Almadhoob and Ayoob Aloribi as an educationl project for [Reboot Coding Institute](https://reboot01.com/). It is inspired by a game with the same name that is originally created by [Ameen Altajer](https://ameen.ai/).
+A classic arcade-style browser game created to raise awareness about water conservation. It is inspired by an open-source [game of the same name](https://ameen.ai/wordpress/?p=181) that is originally created in C++ by Ameen Altajer. This game is created in JavaScript (Vanilla) by Ahmed Almadhoob and Ayoob Aloribi as an educationl project for [Reboot Coding Institute](https://reboot01.com/).
 
-![Gameplay Screenshot](screenshot.png) <!-- Add actual screenshot later -->
+<!-- ![Gameplay Screenshot](screenshot.png) -->
 
 ## Table of Contents
 - [About](#about)
@@ -33,7 +33,7 @@ Precious Drop is an interactive browser game that combines classic arcade mechan
 - 🌍 Environmental awareness message
 - 💧 Realistic water drop physics
 - ⚡ Smooth 60FPS animations
-- ⌨️ Keyboard controls (Arrow keys/A+D)
+- ↔️ Keyboard controls (Arrow keys)
 - 📈 Progressive difficulty system
 - 📊 Score and lives tracking
 - 🔄 Responsive design
@@ -54,8 +54,8 @@ Precious Drop is an interactive browser game that combines classic arcade mechan
 
 ## How to Play
 **Controls:**
-- ← Arrow Left / A: Move left
-- → Arrow Right / D: Move right
+- ← Arrow Left or A: Move left
+- → Arrow Right or D: Move right
 
 **Objective:**
 - Catch falling water drops in your bowl
@@ -79,17 +79,21 @@ Please adhere to FOSS community ethics and best practices.
 
 ## Credits
 **Developers:**
-- Ahmed Almadhoob — [LinkedIn](https://bh.linkedin.com/in/almadhoob/)
-- Ayoob Aloribi — [LinkedIn](https://bh.linkedin.com/in/ayoob-aloribi/)
+- [Ahmed Almadhoob](https://bh.linkedin.com/in/almadhoob/)
+- [Ayoob Aloribi](https://bh.linkedin.com/in/ayoob-aloribi/)
+
+**Supervisors:**
+- [Ahmed Abdeen](https://www.linkedin.com/in/ahmedabdeen/)
+- [Ahmed Al Jamal](https://www.linkedin.com/in/ahmed-al-jamal-5a5b0214b/)
+- [Yaman Al Masri](https://www.linkedin.com/in/yaman-al-masri-1b2108244/)
 
 **Special Thanks:**
-- Ahmed Abdeen
-- Ahmed Al Jamal
-- Yaman Al Masri
+- [Ameen Altajer](https://www.linkedin.com/in/altajer/)
 
 ## License
 Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
 
 ---
+<br />
 
 **Make every drop count!** 💦 Save water in real life like you do in the game!
