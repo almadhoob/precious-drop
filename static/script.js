@@ -13,6 +13,8 @@ let isMovingRight = false;
 let lastTime = 0;
 const dropInterval = 500;
 let gameActive = true;
+let isPaused = false;
+let animationFrameId = null;
 
 function updatePlayerPosition() {
   player.element.style.left = `${player.x - player.width / 2}px`;
@@ -47,7 +49,12 @@ function checkCollision(drop) {
 function updateGame(time) {
   if (!gameActive) return;
 
-  requestAnimationFrame(updateGame);
+  if (isPaused) {
+    animationFrameId = requestAnimationFrame(updateGame);
+    return;
+  }
+
+  animationFrameId = requestAnimationFrame(updateGame);
 
   const deltaTime = time - lastTime;
   lastTime = time;
@@ -90,11 +97,34 @@ function updateGame(time) {
 
 function gameOver() {
   gameActive = false;
+  if (animationFrameId) {
+    cancelAnimationFrame(animationFrameId);
+    animationFrameId = null;
+  }
   document.getElementById("gameOver").style.display = "block";
   document.getElementById("finalScore").textContent = score;
 }
 
+function togglePause() {
+  isPaused = !isPaused;
+  document.getElementById("pauseMenu").style.display = isPaused ? "block" : "none";
+}
+
+function continueGame() {
+  isPaused = false;
+  document.getElementById("pauseMenu").style.display = "none";
+  lastTime = performance.now(); 
+}
+
 function restartGame() {
+  if (animationFrameId) {
+    cancelAnimationFrame(animationFrameId);
+    animationFrameId = null;
+  }
+
+  isMovingLeft = false;
+  isMovingRight = false;
+
   drops.forEach((drop) => drop.element.remove());
   drops = [];
 
@@ -107,8 +137,14 @@ function restartGame() {
   document.getElementById("gameOver").style.display = "none";
   gameActive = true;
   lastTime = 0;
-  requestAnimationFrame(updateGame);
+  animationFrameId = requestAnimationFrame(updateGame);
 }
+
+document.getElementById("continueButton").addEventListener("click", continueGame);
+document.getElementById("restartButtonPause").addEventListener("click", function() {
+  continueGame(); // First unpause
+  restartGame();  // Then restart
+});
 
 window.addEventListener("keydown", (e) => {
   if (e.key === "ArrowLeft" || e.key === "a") isMovingLeft = true;
@@ -118,6 +154,16 @@ window.addEventListener("keydown", (e) => {
 window.addEventListener("keyup", (e) => {
   if (e.key === "ArrowLeft" || e.key === "a") isMovingLeft = false;
   if (e.key === "ArrowRight" || e.key === "d") isMovingRight = false;
+});
+
+window.addEventListener("keydown", (e) => {
+  if (e.key === "ArrowLeft" || e.key === "a") isMovingLeft = true;
+  if (e.key === "ArrowRight" || e.key === "d") isMovingRight = true;
+  
+  // Pause/unpause with Escape or P key
+  if ((e.key === "Escape" || e.key === "p" || e.key === "P") && gameActive) {
+    togglePause();
+  }
 });
 
 window.addEventListener("resize", () => {
