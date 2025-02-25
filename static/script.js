@@ -1,3 +1,15 @@
+const waterFacts = [
+  "The average American uses about 88 gallons of water per day at home.",
+  "A running tap wastes 6 liters of water per minute.",
+  "A leaky faucet that drips once per second can waste over 3,000 gallons per year.",
+  "Taking a 5-minute shower uses 10 to 25 gallons of water.",
+  "It takes 713 gallons of water to produce one cotton t-shirt.",
+  "About 95% of the water entering our homes goes down the drain.",
+  "Saving water reduces carbon pollution too because it takes a lot of energy to treat and pump water.",
+  "More than 2 billion people lack access to safe drinking water.",
+  "About 70% of the Earth's surface is covered in water, but only 3% is freshwater."
+];
+
 const player = {
   element: document.getElementById("player"),
   speed: 8,
@@ -5,6 +17,7 @@ const player = {
   width: 100,
 };
 
+let gameStarted = false;
 let score = 0;
 let lives = 10;
 let drops = [];
@@ -29,6 +42,12 @@ let currentFps = 60;
 let debugMode = true; // Set to true to show FPS counter
 
 
+function setRandomWaterFact() {
+  const factElement = document.getElementById("waterFact");
+  const randomIndex = Math.floor(Math.random() * waterFacts.length);
+  factElement.textContent = waterFacts[randomIndex];
+}
+
 function updatePlayerPosition() {
   player.element.style.left = `${player.x - player.width / 2}px`;
 }
@@ -37,7 +56,7 @@ function initGame() {
   initializeDropPool(50); // Pre-create 50 drop elements
   if (debugMode) initDebugMode();
   updatePlayerPosition();
-  requestAnimationFrame(updateGame);
+  showStartScreen();
 }
 
 function initializeDropPool(size) {
@@ -214,14 +233,73 @@ function initDebugMode() {
   }
 }
 
+function startGame() {
+  gameStarted = true;
+  document.getElementById("startScreen").style.display = "none";
+  
+  // Reset/initialize game state
+  score = 0;
+  lives = 10;
+  difficultyLevel = 1;
+  lastDifficultyUpdateScore = 0;
+  
+  // Update UI
+  document.getElementById("score").textContent = "0";
+  document.getElementById("lives").textContent = "10";
+  
+  // Hide any menus that might be showing
+  document.getElementById("gameOver").style.display = "none";
+  document.getElementById("pauseMenu").style.display = "none";
+  
+  // Start game
+  gameActive = true;
+  isPaused = false;
+  lastTime = performance.now();
+  
+  // Start the game loop
+  if (animationFrameId) {
+    cancelAnimationFrame(animationFrameId);
+  }
+  animationFrameId = requestAnimationFrame(updateGame);
+}
+
+function showStartScreen() {
+  // Hide game over and pause menus
+  document.getElementById("gameOver").style.display = "none";
+  document.getElementById("pauseMenu").style.display = "none";
+  
+  // Reset game objects
+  drops.forEach(drop => {
+    recycleDropToPool(drop.element);
+  });
+  drops = [];
+  
+  // Show start screen with a new random fact
+  setRandomWaterFact();
+  document.getElementById("startScreen").style.display = "flex";
+}
+
+document.getElementById("startButton").addEventListener("click", startGame);
+setRandomWaterFact();
+
 function gameOver() {
   gameActive = false;
+  gameStarted = false;
+
   if (animationFrameId) {
     cancelAnimationFrame(animationFrameId);
     animationFrameId = null;
   }
   document.getElementById("gameOver").style.display = "block";
   document.getElementById("finalScore").textContent = score;
+
+  if (!document.getElementById("backToMenuButton")) {
+    const backButton = document.createElement("button");
+    backButton.id = "backToMenuButton";
+    backButton.textContent = "Back to Menu";
+    backButton.addEventListener("click", showStartScreen);
+    document.getElementById("gameOver").appendChild(backButton);
+  }
 }
 
 function togglePause() {
@@ -262,6 +340,7 @@ function restartGame() {
   isPaused = false;
   gameActive = true;
   lastTime = 0;
+  gameStarted = true;
   animationFrameId = requestAnimationFrame(updateGame);
 }
 

@@ -7,6 +7,29 @@
     <link rel="stylesheet" href="static/style.css" />
   </head>
   <body>
+    <div id="startScreen">
+      <div class="start-container">
+        <h1>Precious Drop 💧</h1>
+        <div class="water-animation">
+          <div class="drop"></div>
+          <div class="water-surface"></div>
+          <div class="bowl-image"></div>
+        </div>
+        <p class="tagline">Make every drop count!</p>
+        <div class="instruction-box">
+          <h3>How to Play:</h3>
+          <p><span class="key">←</span> <span class="key">→</span> Arrow keys or <span class="key">A</span> <span class="key">D</span> to move</p>
+          <p>Catch falling water drops in your bowl</p>
+          <p>10 points per drop</p>
+          <p>Miss a drop, lose a life!</p>
+        </div>
+        <div class="water-fact">
+          <h3>Did you know?</h3>
+          <p id="waterFact">The average American uses about 88 gallons of water per day at home.</p>
+        </div>
+        <button id="startButton" class="start-button">Start Game</button>
+      </div>
+    </div>
     <div id="scoreBoard">
       Score: <span id="score">0</span> | Lives: <span id="lives">10</span>
     </div>

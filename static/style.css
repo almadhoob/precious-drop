@@ -19,6 +19,84 @@ button:hover {
   background: #45a049;
 }
 
+.start-container {
+  width: 80%;
+  max-width: 600px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 0 30px rgba(0, 100, 255, 0.3);
+  text-align: center;
+}
+
+
+#startScreen h1 {
+  color: #1a5c8f;
+  font-size: 42px;
+  margin: 0 0 20px 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#startScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, #87ceeb, #e0f6ff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+#startScreen h1 {
+  color: #1a5c8f;
+  font-size: 42px;
+  margin: 0 0 20px 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tagline {
+  color: #3399cc;
+  font-size: 18px;
+  font-style: italic;
+  margin-bottom: 20px;
+}
+
+
+.instruction-box {
+  background-color: rgba(26, 92, 143, 0.1);
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.instruction-box h3 {
+  color: #1a5c8f;
+  margin-top: 0;
+}
+
+.start-button {
+  background: #4caf50;
+  border: none;
+  padding: 12px 24px;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.start-button:hover {
+  background: #45a049;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
 #gameContainer {
   width: 100vw;
   height: 100vh;
@@ -60,6 +138,44 @@ button:hover {
   text-align: center;
 }
 
+.drop {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle at 30% 30%, #00bfff, #0066cc);
+  border-radius: 50% 50% 50% 50%/60% 60% 40% 40%;
+  box-shadow: 0 0 10px #00bfff;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
+  animation: dropfall 1.5s infinite;
+}
+
+.water-surface {
+  position: absolute;
+  width: 60px;
+  height: 10px;
+  background: #3399cc;
+  border-radius: 50%;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  animation: ripple 1.5s infinite;
+}
+
+.bowl-image {
+  position: absolute;
+  width: 100px;
+  height: 40px;
+  background: #8b4513;
+  border-radius: 0 0 50px 50px;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
 .water-drop {
   width: 20px;
   height: 20px;
@@ -67,6 +183,25 @@ button:hover {
   border-radius: 50% 50% 50% 50%/60% 60% 40% 40%;
   position: absolute;
   box-shadow: 0 0 10px #00bfff;
+}
+
+.water-animation {
+  position: relative;
+  height: 120px;
+  margin: 20px 0;
+}
+
+.water-fact {
+  background-color: rgba(0, 150, 255, 0.1);
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-left: 4px solid #3399cc;
+}
+
+.water-fact h3 {
+  color: #1a5c8f;
+  margin-top: 0;
 }
 
 #pauseMenu {
@@ -112,6 +247,51 @@ button:hover {
   font-weight: bold;
   z-index: 50;
   animation: fadeInOut 2s ease-in-out forwards;
+}
+
+.key {
+  display: inline-block;
+  background-color: #1a5c8f;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin: 0 2px;
+  font-family: monospace;
+  font-weight: bold;
+}
+
+@keyframes dropfall {
+  0% {
+    top: 0;
+    opacity: 1;
+  }
+  70% {
+    top: 70px;
+    opacity: 1;
+  }
+  75% {
+    top: 70px;
+    opacity: 0;
+  }
+  100% {
+    top: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes ripple {
+  0%, 65% {
+    opacity: 0;
+    width: 30px;
+  }
+  75% {
+    opacity: 1;
+    width: 30px;
+  }
+  100% {
+    opacity: 0;
+    width: 60px;
+  }
 }
 
 @keyframes fadeInOut {
