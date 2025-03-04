@@ -12,14 +12,14 @@ const waterFacts = [
 
 const player = {
   element: document.getElementById("player"),
-  speed: 8,
+  speed: 16,
   x: 50,
   width: 100,
 };
 
 let gameStarted = false;
 let score = 0;
-let lives = 10;
+let lives = 15;
 let drops = [];
 let isMovingLeft = false;
 let isMovingRight = false;
@@ -39,8 +39,10 @@ let dropPool = []; // Object pool for water drops
 let frameCount = 0;
 let lastFpsUpdate = 0;
 let currentFps = 60;
-let debugMode = true; // Set to true to show FPS counter
+let debugMode = false; // Set to true to show FPS counter
 
+let lastDropTime = 0; // Track the last drop creation time
+const minDropInterval = 1000; // Minimum time interval between drops in milliseconds
 
 function setRandomWaterFact() {
   const factElement = document.getElementById("waterFact");
@@ -112,13 +114,15 @@ function updateDifficulty() {
   }
   
   lastDifficultyUpdateScore = score;
+  
+  document.getElementById("difficulty").textContent = difficultyLevel;  
   return difficultyLevel;
 }
 
 function showDifficultyNotification() {
   const notification = document.createElement("div");
   notification.className = "difficulty-notification";
-  notification.textContent = `Difficulty Increased to Level ${difficultyLevel}!`;
+  notification.textContent = `Promoted to Level ${difficultyLevel}!`;
   document.getElementById("gameContainer").appendChild(notification);
   
   // Remove notification after animation
@@ -184,14 +188,16 @@ function updateGame(time) {
     player.x = Math.max(player.width / 2, player.x - player.speed);
   if (isMovingRight)
     player.x = Math.min(
-      window.innerWidth - player.width / 2,
+      window.innerWidth,
       player.x + player.speed
     );
 
   updatePlayerPosition();
 
-  if (Math.random() < deltaTime / currentDropInterval) {
+  // Only create a new drop if the minimum interval has passed
+  if (time - lastDropTime >= minDropInterval && Math.random() < deltaTime / currentDropInterval) {
     drops.push(createDrop());
+    lastDropTime = time; // Update the last drop creation time
   }
 
   drops = drops.filter((drop) => {
@@ -239,13 +245,13 @@ function startGame() {
   
   // Reset/initialize game state
   score = 0;
-  lives = 10;
+  lives = 15;
   difficultyLevel = 1;
   lastDifficultyUpdateScore = 0;
   
   // Update UI
   document.getElementById("score").textContent = "0";
-  document.getElementById("lives").textContent = "10";
+  document.getElementById("lives").textContent = "15";
   
   // Hide any menus that might be showing
   document.getElementById("gameOver").style.display = "none";
@@ -328,13 +334,13 @@ function restartGame() {
   drops = [];
 
   score = 0;
-  lives = 10;
+  lives = 15;
   difficultyLevel = 1;
   lastDifficultyUpdateScore = 0;
   player.x = window.innerWidth / 2;
   updatePlayerPosition();
   document.getElementById("score").textContent = "0";
-  document.getElementById("lives").textContent = "10";
+  document.getElementById("lives").textContent = "15";
   document.getElementById("gameOver").style.display = "none";
   document.getElementById("pauseMenu").style.display = "none";
   isPaused = false;

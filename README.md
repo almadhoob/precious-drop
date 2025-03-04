@@ -64,7 +64,7 @@ Precious Drop is an interactive browser game that combines classic arcade mechan
 - Survive as long as possible!
 
 **Game Over:**
-- Occurs when all 10 lives are lost
+- Occurs when all 15 lives are lost
 - Final score displayed with restart option
 
 ## Contributing
