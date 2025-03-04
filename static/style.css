@@ -29,7 +29,6 @@ button:hover {
   text-align: center;
 }
 
-
 #startScreen h1 {
   color: #1a5c8f;
   font-size: 42px;
@@ -63,7 +62,6 @@ button:hover {
   font-style: italic;
   margin-bottom: 20px;
 }
-
 
 .instruction-box {
   background-color: rgba(26, 92, 143, 0.1);
@@ -280,7 +278,8 @@ button:hover {
 }
 
 @keyframes ripple {
-  0%, 65% {
+  0%,
+  65% {
     opacity: 0;
     width: 30px;
   }
@@ -295,8 +294,16 @@ button:hover {
 }
 
 @keyframes fadeInOut {
-  0% { opacity: 0; }
-  20% { opacity: 1; }
-  80% { opacity: 1; }
-  100% { opacity: 0; }
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }

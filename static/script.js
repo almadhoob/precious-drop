@@ -7,7 +7,7 @@ const waterFacts = [
   "About 95% of the water entering our homes goes down the drain.",
   "Saving water reduces carbon pollution too because it takes a lot of energy to treat and pump water.",
   "More than 2 billion people lack access to safe drinking water.",
-  "About 70% of the Earth's surface is covered in water, but only 3% is freshwater."
+  "About 70% of the Earth's surface is covered in water, but only 3% is freshwater.",
 ];
 
 const player = {
@@ -74,8 +74,8 @@ function initializeDropPool(size) {
 
 function getDropFromPool() {
   // Try to get an existing drop from the pool
-  let dropElement = dropPool.find(drop => drop.style.display === "none");
-  
+  let dropElement = dropPool.find((drop) => drop.style.display === "none");
+
   // If no drops available, create a new one and add to pool
   if (!dropElement) {
     dropElement = document.createElement("div");
@@ -83,7 +83,7 @@ function getDropFromPool() {
     document.getElementById("gameContainer").appendChild(dropElement);
     dropPool.push(dropElement);
   }
-  
+
   // Reset and show the drop
   dropElement.style.display = "block";
   return dropElement;
@@ -99,23 +99,23 @@ function updateDifficulty() {
   if (score <= lastDifficultyUpdateScore) {
     return difficultyLevel;
   }
-  
+
   // Calculate difficulty level (1 is base level)
   let newLevel = Math.floor(score / scoreThreshold) + 1;
-  
+
   // If difficulty has increased, show a notification
   if (newLevel > difficultyLevel) {
     difficultyLevel = newLevel;
-    
+
     // Use requestAnimationFrame to ensure notifications don't cause frame drops
     requestAnimationFrame(() => {
       showDifficultyNotification();
     });
   }
-  
+
   lastDifficultyUpdateScore = score;
-  
-  document.getElementById("difficulty").textContent = difficultyLevel;  
+
+  document.getElementById("difficulty").textContent = difficultyLevel;
   return difficultyLevel;
 }
 
@@ -124,7 +124,7 @@ function showDifficultyNotification() {
   notification.className = "difficulty-notification";
   notification.textContent = `Promoted to Level ${difficultyLevel}!`;
   document.getElementById("gameContainer").appendChild(notification);
-  
+
   // Remove notification after animation
   setTimeout(() => {
     notification.remove();
@@ -145,7 +145,7 @@ function createDrop() {
     element: dropElement,
     y: -20,
     speed: baseSpeed + extraSpeed,
-    x: dropX
+    x: dropX,
   };
 }
 
@@ -187,22 +187,22 @@ function updateGame(time) {
   if (isMovingLeft)
     player.x = Math.max(player.width / 2, player.x - player.speed);
   if (isMovingRight)
-    player.x = Math.min(
-      window.innerWidth,
-      player.x + player.speed
-    );
+    player.x = Math.min(window.innerWidth, player.x + player.speed);
 
   updatePlayerPosition();
 
   // Only create a new drop if the minimum interval has passed
-  if (time - lastDropTime >= minDropInterval && Math.random() < deltaTime / currentDropInterval) {
+  if (
+    time - lastDropTime >= minDropInterval &&
+    Math.random() < deltaTime / currentDropInterval
+  ) {
     drops.push(createDrop());
     lastDropTime = time; // Update the last drop creation time
   }
 
   drops = drops.filter((drop) => {
     drop.y += drop.speed;
-    
+
     // Use transform for better performance
     drop.element.style.transform = `translateX(${drop.x}px) translateY(${drop.y}px)`;
 
@@ -242,26 +242,26 @@ function initDebugMode() {
 function startGame() {
   gameStarted = true;
   document.getElementById("startScreen").style.display = "none";
-  
+
   // Reset/initialize game state
   score = 0;
   lives = 15;
   difficultyLevel = 1;
   lastDifficultyUpdateScore = 0;
-  
+
   // Update UI
   document.getElementById("score").textContent = "0";
   document.getElementById("lives").textContent = "15";
-  
+
   // Hide any menus that might be showing
   document.getElementById("gameOver").style.display = "none";
   document.getElementById("pauseMenu").style.display = "none";
-  
+
   // Start game
   gameActive = true;
   isPaused = false;
   lastTime = performance.now();
-  
+
   // Start the game loop
   if (animationFrameId) {
     cancelAnimationFrame(animationFrameId);
@@ -273,13 +273,13 @@ function showStartScreen() {
   // Hide game over and pause menus
   document.getElementById("gameOver").style.display = "none";
   document.getElementById("pauseMenu").style.display = "none";
-  
+
   // Reset game objects
-  drops.forEach(drop => {
+  drops.forEach((drop) => {
     recycleDropToPool(drop.element);
   });
   drops = [];
-  
+
   // Show start screen with a new random fact
   setRandomWaterFact();
   document.getElementById("startScreen").style.display = "flex";
@@ -310,13 +310,15 @@ function gameOver() {
 
 function togglePause() {
   isPaused = !isPaused;
-  document.getElementById("pauseMenu").style.display = isPaused ? "block" : "none";
+  document.getElementById("pauseMenu").style.display = isPaused
+    ? "block"
+    : "none";
 }
 
 function continueGame() {
   isPaused = false;
   document.getElementById("pauseMenu").style.display = "none";
-  lastTime = performance.now(); 
+  lastTime = performance.now();
 }
 
 function restartGame() {
@@ -328,7 +330,7 @@ function restartGame() {
   isMovingLeft = false;
   isMovingRight = false;
 
-  drops.forEach(drop => {
+  drops.forEach((drop) => {
     recycleDropToPool(drop.element);
   });
   drops = [];
@@ -350,11 +352,15 @@ function restartGame() {
   animationFrameId = requestAnimationFrame(updateGame);
 }
 
-document.getElementById("continueButton").addEventListener("click", continueGame);
-document.getElementById("restartButtonPause").addEventListener("click", function() {
-  continueGame(); // First unpause
-  restartGame();  // Then restart
-});
+document
+  .getElementById("continueButton")
+  .addEventListener("click", continueGame);
+document
+  .getElementById("restartButtonPause")
+  .addEventListener("click", function () {
+    continueGame(); // First unpause
+    restartGame(); // Then restart
+  });
 
 window.addEventListener("keyup", (e) => {
   if (e.key === "ArrowLeft" || e.key === "a") isMovingLeft = false;
@@ -364,7 +370,7 @@ window.addEventListener("keyup", (e) => {
 window.addEventListener("keydown", (e) => {
   if (e.key === "ArrowLeft" || e.key === "a") isMovingLeft = true;
   if (e.key === "ArrowRight" || e.key === "d") isMovingRight = true;
-  
+
   // Pause/unpause with Escape or P key
   if ((e.key === "Escape" || e.key === "p" || e.key === "P") && gameActive) {
     togglePause();
